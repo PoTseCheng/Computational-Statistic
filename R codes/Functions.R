@@ -38,28 +38,28 @@ Rawdata<- function (samplesize){
   Ccount<- rtruncnorm(samplesize, a=0, b=5, mean=0.691, sd=0.898)
   Dcount<- rtruncnorm(samplesize, a=0, b=4, mean=0.13, sd=0.387)
   
+  
+  #we will also generate the result here according to the paper
+  
+  Result<- sample(c(0, 1, 2), size=samplesize, replace=TRUE, prob = c(0.659, 0.0854, 0.2556))
+  Graduated <- as.numeric(Result == 0)
+  Graduated_T <- as.numeric(Result == 1)
+  Not_Graduated <- as.numeric(Result == 2)
+  
+  
+  
   #build the dataframe
-  raw <-data.frame(D_F, D_U, D_A, D_G, D_19, G_O, G_R, A_R, A_F, A_LC, A_LL, A_A, Unmet, Needaid, Loanaid, Meritaid, ACT, AP, Course, Ccount, Dcount)
+  raw <-data.frame(D_F, D_U, D_A, D_G, D_19, G_O, G_R, A_R, A_F, A_LC, A_LL, A_A, Unmet, Needaid, Loanaid, Meritaid, ACT, AP, Course, Ccount, Dcount, Graduated, Graduated_T, Not_Graduated)
   
   return(raw)
 }
 
-Truedata<- function (){
-  #we will generate the probability according to the papers result, then construct 
-  #dummy variables to categorise the end effect
-  
-  
-  
-  
-  
-  
-  return(some random shit)
-}
-
-#the use dplyr to split the data into training and testing
 
 
-Genauigkeit(){
+
+
+
+Genauigkeit(data1, data2){
   #function that return the accuracy
   
   
