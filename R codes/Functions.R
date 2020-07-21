@@ -1,6 +1,9 @@
 library(truncnorm)
 
-Rawdata<- function (samplesize, some shit here idk){
+Rawdata<- function (samplesize){
+  #maybe can expand this function in the future for more testing(for instance adding 0 function to test certain algorithm)
+  
+  
   #key idea about this process: We will be using the descriptive statistics to
   #to generate the result
   
@@ -31,7 +34,10 @@ Rawdata<- function (samplesize, some shit here idk){
   Ccount<- rtruncnorm(samplesize, a=0, b=5, mean=0.691, sd=0.898)
   Dcount<- rtruncnorm(samplesize, a=0, b=4, mean=0.13, sd=0.387)
   
+  #build the dataframe
+  raw <-data.frame(D_F, D_U, D_A, D_G, D_19, G_O, G_R, A_R, A_F, A_LC, A_LL, A_A, Unmet, Needaid, Loanaid, Meritaid, ACT, AP, Course, Ccount, Dcount)
   
-  
+  return(raw)
+}
 
-  }
+Truedata<- function ()
