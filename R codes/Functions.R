@@ -1,4 +1,8 @@
 library(truncnorm)
+library(dplyr)
+library(nnet)
+
+
 
 Rawdata<- function (samplesize){
   #maybe can expand this function in the future for more testing(for instance adding 0 function to test certain algorithm)
@@ -40,4 +44,31 @@ Rawdata<- function (samplesize){
   return(raw)
 }
 
-Truedata<- function ()
+Truedata<- function (){
+  #we will generate the probability according to the papers result, then construct 
+  #dummy variables to categorise the end effect
+  
+  
+  
+  
+  
+  
+  return(some random shit)
+}
+
+#the use dplyr to split the data into training and testing
+
+
+Genauigkeit(){
+  #function that return the accuracy
+  
+  
+  
+  
+  
+  
+  
+  
+}
+
+
