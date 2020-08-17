@@ -1,9 +1,25 @@
+#setting up the environment
+install.packages(c("partykit", "rweka", "rpart", "truncnorm", "remotes"))
+
+remotes::install_github("jhilaire/guidr")
+
+#general tools in need
 library(truncnorm)
 library(dplyr)
-library(nnet)
+library(partykit)
+
+#This is for CART algorithm
+library(rpart)
+
+#This is for C 4.5
+library(rweka)
+
+#This is for GUILD
+library(remotes)
 
 
 
+#DGP from the paper 
 Rawdata<- function (samplesize){
   #maybe can expand this function in the future for more testing(for instance adding 0 function to test certain algorithm)
   
@@ -41,15 +57,17 @@ Rawdata<- function (samplesize){
   
   #we will also generate the result here according to the paper
   
-  Result<- sample(c(0, 1, 2), size=samplesize, replace=TRUE, prob = c(0.659, 0.0854, 0.2556))
-  Graduated <- as.numeric(Result == 0)
-  Graduated_T <- as.numeric(Result == 1)
-  Not_Graduated <- as.numeric(Result == 2)
+  temp<- sample(c(0, 1, 2), size=samplesize, replace=TRUE, prob = c(0.659, 0.0854, 0.2556))
   
-  
-  
+  Result <-factor(temp, levels = c(0,1,2), labels = c("Graduated", "Graduated_T", "Not_Graduated"))
+
+
   #build the dataframe
-  raw <-data.frame(D_F, D_U, D_A, D_G, D_19, G_O, G_R, A_R, A_F, A_LC, A_LL, A_A, Unmet, Needaid, Loanaid, Meritaid, ACT, AP, Course, Ccount, Dcount, Graduated, Graduated_T, Not_Graduated)
+  raw <-data.frame(D_F, D_U, D_A, D_G, D_19, G_O, G_R, A_R, A_F, A_LC, A_LL, A_A, Unmet, Needaid, Loanaid, Meritaid, ACT, AP, Course, Ccount, Dcount, Result)
+  
+  
+  
+  
   
   return(raw)
 }
