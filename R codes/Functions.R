@@ -77,16 +77,3 @@ Rawdata<- function (samplesize){
 
 
 
-Genauigkeit(data1, data2){
-  #function that return the accuracy
-  
-  
-  
-  
-  
-  
-  
-  
-}
-
-

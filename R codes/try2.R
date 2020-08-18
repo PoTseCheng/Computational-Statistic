@@ -24,7 +24,7 @@ test <- round(n1*(1/46))+round(n1*(9/46))+ round(n1*(16/46))+ round(n1*(20/46))
 
 if (test< n1){
   addmiss<- age(1, x= 45:66)
-  n13<- c(n12, addmiss)
+  n13<- c(n13, addmiss)
   
   
 } else if (test > n1){
@@ -41,14 +41,53 @@ temp<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(39/46, 5/46, 2/46))
 address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
 
 #temperature
-temp2<- sample(c(0, 1, 2, 3), size=n1, replace=TRUE, prob = c(9/46, 16/46, 20/46, 1/46))
-temperature<- factor(temp2, levels = c(0, 1, 2, 3), labels = c("average", "high", "dangerous", "critical"))
+#temp2<- sample(c(0, 1, 2, 3), size=n1, replace=TRUE, prob = c(9/46, 16/46, 20/46, 1/46))
+#tlabel<- factor(temp2, levels = c(0, 1, 2, 3), labels = c("average", "high", "dangerous", "critical"))
 
+
+
+n31<- runif(round(n1*(9/46)), 36.5, 37.2)
+n32<- runif(round(n1*(16/46)), 37.3, 38.0)
+n33<- runif(round(n1*(20/46)), 38.1, 39.0)
+n34<- runif(round(n1*(1/46)), 39.1, 41)
+
+test3 <- round(n1*(9/46))+round(n1*(16/46)) + round(n1*(20/46)) + round(n1*(1/46))
+
+if (test3< n1){
+  addmiss<- sample(37.3:38.0, size = 1)
+  n32<- c(n32, addmiss)
+  
+  
+} else if (test3 > n1){
+  n32 <- n32[-sample(1:length(n32), 1)]
+  
+} 
+
+
+rawtemperature<- c(n31, n32, n33, n34)
+temperature<- vector()
+for (i in rawtemperature){
+  temperature<- c(temperature, round(i, 2))
+  
+  
+}
+
+tlabel<- vector()
+for (i in temperature){
+  if (i <= 37.5){
+    tlabel<- c(tlabel, "Normal")
+  } else if (i>37.5& i <=40){
+    tlabel<- c(tlabel, "Fever")
+  } else if (i>40){
+    tlabel<- c(tlabel, "Hyperpyrexia")
+  }
+  
+  
+}
 #Wuhan Contacts
 temp3<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(13/46, 26/46, 7/46))
 contact<- factor(temp3, levels = c(0, 1, 2), labels = c("Wuhan 14 days", "Case 14 days", "Unknown"))
 #symptoms
-fever<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(37/46, 9/46))
 cough<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(25/46, 21/46))
 fatigue<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(15/46, 31/46))
 Dyspnea<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(15/46, 31/46))
@@ -58,7 +97,7 @@ Headache<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(3/46, 43/46))
 temp4<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(2/46, 41/46, 3/46))
 result<- factor(temp4, levels = c(0, 1, 2), labels = c("Discharge", "Hospitalization", "Death"))
 
-groupa<- data.frame(severity, gender, age, address, contact, temperature, fever, cough, fatigue, Dyspnea, Headache, result)
+groupa<- data.frame(severity, gender, age, address, contact, temperature, tlabel, cough, fatigue, Dyspnea, Headache, result)
 
 #group B
 
@@ -75,7 +114,7 @@ test <- round(n2*(10/216))+round(n2*(103/216))+ round(n2*(75/216))+ round(n2*(28
 
 if (test< n2){
   addmiss<- age(1, x= 45:66)
-  n13<- c(n22, addmiss)
+  n23<- c(n23, addmiss)
   
   
 } else if (test > n2){
@@ -92,14 +131,56 @@ temp<- sample(c(0, 1, 2), size=n2, replace=TRUE, prob = c(153/216, 48/216, 15/21
 address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
 
 #temperature
-temp2<- sample(c(0, 1, 2, 3), size=n2, replace=TRUE, prob = c(38/216, 94/216, 76/216, 8/216))
-temperature<- factor(temp2, levels = c(0, 1, 2, 3), labels = c("average", "high", "dangerous", "critical"))
+
+#temp2<- sample(c(0, 1, 2, 3), size=n2, replace=TRUE, prob = c(38/216, 94/216, 76/216, 8/216))
+
+#tlabel<- factor(temp2, levels = c(0, 1, 2, 3), labels = c("average", "high", "dangerous", "critical"))
+
+
+n41<- runif(round(n2*(38/216)), 36.5, 37.2)
+n42<- runif(round(n2*(94/216)), 37.3, 38.0) 
+n43<- runif(round(n2*(76/216)), 38.1, 39.0) 
+n44<- runif(round(n2*(8/216)), 39.1, 41) 
+
+test4 <- round(n2*(38/216))+round(n2*(94/216)) + round(n2*(76/216)) + round(n2*(8/216))
+
+if (test4< n2){
+  addmiss<- sample(37.3:38.0, size = 1)
+  n42<- c(n42, addmiss)
+  
+  
+} else if (test4 > n2){
+  n42 <- n42[-sample(1:length(n42), 1)]
+  
+} 
+temperature<- c(n41, n42, n43, n44)
+
+rawtemperature<- c(n41, n42, n43, n44)
+temperature<- vector()
+for (i in rawtemperature){
+  temperature<- c(temperature, round(i, 2))
+  
+  
+}
+
+tlabel<- vector()
+for (i in temperature){
+  if (i <= 37.5){
+    tlabel<- c(tlabel, "Normal")
+  } else if (i>37.5& i <=40){
+    tlabel<- c(tlabel, "Fever")
+  } else if (i>40){
+    tlabel<- c(tlabel, "Hyperpyrexia")
+  }
+  
+  
+}
 
 #Wuhan Contacts
 temp3<- sample(c(0, 1, 2), size=n2, replace=TRUE, prob = c(93/216, 103/216, 20/216))
 contact<- factor(temp3, levels = c(0, 1, 2), labels = c("Wuhan 14 days", "Case 14 days", "Unknown"))
 #symptoms
-fever<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(178/216, 38/216))
+#fever<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(178/216, 38/216))
 cough<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(95/216, 121/216))
 fatigue<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(54/216, 162/216))
 Dyspnea<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(3/216, 213/216))
@@ -109,7 +190,7 @@ Headache<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(14/216, 202/216))
 temp4<- sample(c(0, 1, 2), size=n2, replace=TRUE, prob = c(2/216, 41/216, 3/216))
 result<- factor(temp4, levels = c(0, 1, 2), labels = c("Discharge", "Hospitalization", "Death"))
 
-groupb<- data.frame(severity, gender, age, address, contact, temperature, fever, cough, fatigue, Dyspnea, Headache, result)
+groupb<- data.frame(severity, gender, age, address, contact, temperature, tlabel, cough, fatigue, Dyspnea, Headache, result)
 
 
 total <- rbind(groupa, groupb)
@@ -117,9 +198,3 @@ return (total)
 }
 
 
-splitter<- function (data){
-  #this function split the training and testing data
-  
-  
-  
-}
