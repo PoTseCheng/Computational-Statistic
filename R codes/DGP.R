@@ -285,7 +285,7 @@ return (total)
 
 #DGP from the paper2
 
-Observations2<- function (samplesize){
+Observations2<- function (n){
   #maybe can expand this function in the future for more testing(for instance adding 0 function to test certain algorithm)
   
   
@@ -295,40 +295,90 @@ Observations2<- function (samplesize){
   #below are for the dummy variables, which is randomly sampled, we will follow the
   #suggested mean but not the SD. The reason is because the SD is realated to the sample
   #size while the mean is not. In this experiment, the sample size is a controlable variable.
-  D_F<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.543, 0.543))
-  D_U<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.079, 0.079))
-  D_A<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.11, 0.11))
-  D_G<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.364, 0.364))
-  D_19<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.019, 0.019))
-  G_O<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.061, 0.061))
-  G_R<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.248, 0.248))
-  A_R<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.083, 0.083))
-  A_F<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.704, 0.704))
-  A_LC<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.622, 0.622))
-  A_LL<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.139, 0.139))
-  A_A<- sample(c(0,1), size=samplesize, replace=TRUE, prob = c(1-0.041, 0.041))
+  D_F<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.543, 0.543))
+  Gender<- factor(D_F, levels = c(0,1), labels = c("Female", "Male"))
+  D_R<- sample(c(0,1,2), size=n, replace=TRUE, prob = c(0.079, 0.11, 0.811))
+  Race<- factor(D_R, levels = c(0, 1, 2), labels = c("Minorities", "Asian", "White"))
+  D_G<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.636, 0.364))
+  Generation<- factor(D_G, levels = c(0, 1), labels = c("No", "Yes"))
+  D_19<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.019, 0.019))
+  Status<- factor(D_19, levels = c(0, 1), labels = c("Traditional", "Nontraditional"))
+  
+  
+  G_O<- sample(c(0,1,2), size=n, replace=TRUE, prob = c(0.061, 0.248, 0.691))
+  Geographic<- factor(G_O, levels = c(0, 1, 2), labels = c("Out-of-state", "Reciprocity state", "In-state"))
+  
+  A_R<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.917, 0.083))
+  Remedy<- factor(A_R, levels = c(0, 1), labels = c("No", "Yes"))
+  
+  A_F<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.704, 0.704))
+  Choice<- factor(A_F, levels = c(0, 1), labels = c("Others", "First Choice"))
+  A_LC<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.622, 0.622))
+  Living<- factor(A_LC, levels = c(0, 1), labels = c("Outside Campus", "On Campus"))
+  A_LL<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.139, 0.139))
+  Community<- factor(A_LL, levels = c(0, 1), labels = c("No", "Yes"))
+  A_A<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.959, 0.041))
+  Athlete<- factor(A_A, levels = c(0, 1), labels = c("No", "Yes"))
+  
+  
+  #Out of three financial Aid, one could only choose one
+  finraw<- sample(c(0,1,2,3), size=n, replace=TRUE, prob = c(0.03, 0.39, 0.46, 0.12))
+  Aidtype<- factor(finraw, levels = c(0, 1, 2, 3), labels = c("None", "Need Aid", "Loan Aid", "Merit Aid"))
+  
+  #get the Sum of True for each aid
+  a1<- sum(finraw == 1)
+  a2<- sum(finraw == 2)
+  a3<- sum(finraw == 3)
+  
+  #implement aid
+  Needaid<- round(rtruncnorm(a1, a=0, b=9.186, mean=0.948, sd=1.620), 2)
+  Loanaid<- round(rtruncnorm(a2, a=0, b=12.792, mean=1.543, sd=2.234), 2)
+  Meritaid<- round(rtruncnorm(a3, a=0, b=6.818, mean=0.168, sd=0.538), 2)
+  
+  Aidamount<- vector()
+  
+  j<-1
+  x<-1
+  z<-1
+  for (i in finraw){
+    if (i==1){
+      Aidamount<- c(Aidamount, Needaid[j])
+      j<- j+1
+    }else if (i==2){
+      Aidamount<- c(Aidamount,Loanaid[x])
+      x<-x+1
+    }else if (i==3){
+      Aidamount<- c(Aidamount,Meritaid[z])
+      z<- z+1
+    }else if (i==0){
+      Aidamount<- c(Aidamount, 0)
+    }
+    
+    
+  }
+
   
   #we will be using the truncnorm library to construct the variables
-  Unmet<- rtruncnorm(samplesize, a=0, b=26.347, mean=2.038, sd=3.711)
-  Needaid<- rtruncnorm(samplesize, a=0, b=9.186, mean=0.948, sd=1.620)
-  Loanaid<- rtruncnorm(samplesize, a=0, b=12.792, mean=1.543, sd=2.234)
-  Meritaid<- rtruncnorm(samplesize, a=0, b=6.818, mean=0.168, sd=0.538)
-  ACT<- rtruncnorm(samplesize, a=11, b=35, mean=24.657, sd=4.189)
-  AP<- rtruncnorm(samplesize, a=0, b=59, mean=3.153, sd=6.671)
-  Course<- rtruncnorm(samplesize, a=0, b=100, mean=91.857, sd=20.288)
-  Ccount<- rtruncnorm(samplesize, a=0, b=5, mean=0.691, sd=0.898)
-  Dcount<- rtruncnorm(samplesize, a=0, b=4, mean=0.13, sd=0.387)
+  
+
+  Unmet<- round(rtruncnorm(n, a=0, b=26.347, mean=2.038, sd=3.711), 2)
+  
+  ACT<- round(rtruncnorm(n, a=11, b=35, mean=24.657, sd=4.189), 2)
+  AP<- round(rtruncnorm(n, a=0, b=59, mean=3.153, sd=6.671), 2)
+  Course<- round(rtruncnorm(n, a=0, b=100, mean=91.857, sd=20.288), 2)
+  Ccount<- round(rtruncnorm(n, a=0, b=5, mean=0.691, sd=0.898), 2)
+  Dcount<- round(rtruncnorm(n, a=0, b=4, mean=0.13, sd=0.387), 2)
   
   
   #we will also generate the result here according to the paper
   
-  temp<- sample(c(0, 1, 2), size=samplesize, replace=TRUE, prob = c(0.659, 0.0854, 0.2556))
+  temp<- sample(c(0, 1, 2), size=n, replace=TRUE, prob = c(0.659, 0.0854, 0.2556))
   
-  Result <-factor(temp, levels = c(0,1,2), labels = c("Graduated", "Graduated_T", "Not_Graduated"))
+  result <-factor(temp, levels = c(0,1,2), labels = c("Graduated", "Transferred Graduated ", "Not Graduated"))
   
   
   #build the dataframe
-  raw <-data.frame(D_F, D_U, D_A, D_G, D_19, G_O, G_R, A_R, A_F, A_LC, A_LL, A_A, Unmet, Needaid, Loanaid, Meritaid, ACT, AP, Course, Ccount, Dcount, Result)
+  raw <-data.frame(Gender, Race, Generation, Status, Geographic, Remedy, Choice, Living, Community, Athlete, Aidtype, Aidamount, Unmet, ACT, AP, Course, Ccount, Dcount, result)
   
   return(raw)
 }

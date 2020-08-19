@@ -12,10 +12,16 @@ train2<- Observations2(50)
 
 #cart by rpart
 
+
+
+printcp(mytree)
+plotcp(mytree)
+
 mytree <- rpart(
-  result ~ address + age + temperature, 
+  symptoms ~. , 
   data = train, 
-  method = "class"
+  method = "class",
+  control=rpart.control( minsplit=3, minbucket=1, cp=0.001)
   )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
@@ -26,23 +32,8 @@ text(mytree, use.n=TRUE, all=TRUE, cex=.8)
 printcp(mytree)
 plotcp(mytree)
 
-mytree2 <- rpart(
-  symptoms ~. , 
-  data = train, 
-  method = "class",
-  control=rpart.control( minsplit=2, minbucket=1, cp=0.001)
-  )
-#check what is the most reasonable cp for rpart
-#, minbucket=1
-#severity + gender + age + address + contact + temperature + fever + cough + fatigue + Dyspnea + Headache
-plot(mytree2)
-text(mytree2, use.n=TRUE, all=TRUE, cex=.8)
-
-printcp(mytree2)
-plotcp(mytree2)
-
 mytree3 <- rpart(
-  Result ~ ., 
+  result ~ ., 
   data = train2, 
   method = "class",
   minsplit = 2, 
@@ -75,7 +66,7 @@ plot(J1)
 summary(J1)
 #according to the J48 algorithm, the node is not worth splitting
 
-J2 <- J48(Result ~.,
+J2 <- J48(result ~.,
           train2
           )
 plot(J2)
@@ -92,12 +83,11 @@ c1<- ctree(symptoms ~ .,
 
 plot(c1)
 
-c2 <- ctree(Result ~.,
+c2 <- ctree(result ~.,
           train2,
           )
 plot(c2)
 
-summary(train)
 
 
 
