@@ -1,20 +1,22 @@
+
+
 library(rpart)
-
-
+library(RWeka)
+library(partykit)
 
 
 set.seed(123)
-train<- Observations(100)
+train<- Observations(50)
 
-train2<- Rawdata(100)
+train2<- Observations2(50)
 
 #cart by rpart
 
 mytree <- rpart(
-  temperature ~ ., 
+  result ~ address + age + temperature, 
   data = train, 
-  method = "class",
-  control=rpart.control( cp=0.001))
+  method = "class"
+  )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
 #severity + gender + age + address + contact + temperature + fever + cough + fatigue + Dyspnea + Headache
@@ -25,10 +27,10 @@ printcp(mytree)
 plotcp(mytree)
 
 mytree2 <- rpart(
-  result ~. , 
+  symptoms ~. , 
   data = train, 
   method = "class",
-  control=rpart.control( minsplit=1, minbucket=1, cp=0.001)
+  control=rpart.control( minsplit=2, minbucket=1, cp=0.001)
   )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
@@ -42,11 +44,13 @@ plotcp(mytree2)
 mytree3 <- rpart(
   Result ~ ., 
   data = train2, 
-  method = "class"
+  method = "class",
+  minsplit = 2, 
+  minbucket = 1
  )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
-#severity + gender + age + address + contact + temperature + fever + cough + fatigue + Dyspnea + Headache
+
 plot(mytree3)
 text(mytree3, use.n=TRUE, all=TRUE, cex=.8)
 
@@ -58,7 +62,44 @@ plotcp(mytree3)
 
 #find a way to show the strengh
 #find a way to make the pictures readable
+
+
+
 #c4.5
 
 
-#
+J1 <- J48(symptoms ~ .,
+          train
+          )
+plot(J1)
+summary(J1)
+#according to the J48 algorithm, the node is not worth splitting
+
+J2 <- J48(Result ~.,
+          train2
+          )
+plot(J2)
+summary(J2)
+#resonate with the cp=inf
+
+#ct tree by partykit(dont know if we keep it or not)
+
+
+
+c1<- ctree(symptoms ~ .,
+           train
+           )
+
+plot(c1)
+
+c2 <- ctree(Result ~.,
+          train2,
+          )
+plot(c2)
+
+summary(train)
+
+
+
+
+
