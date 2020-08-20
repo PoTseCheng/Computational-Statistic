@@ -1,7 +1,6 @@
 #setting up the environment
-install.packages(c("partykit", "RWeka", "rpart", "truncnorm", "remotes"))
+install.packages(c("partykit", "RWeka", "rpart", "truncnorm", "remotes","wakefield", "partykit", "data.table"))
 
-remotes::install_github("jhilaire/guidr")
 
 #general tools in need
 library(truncnorm)
