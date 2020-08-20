@@ -1,8 +1,6 @@
 #Packages for DGP
 #for age generation
 library(wakefield)
-library(dplyr)
-library(partykit)
 library(truncnorm)
 
 #DGP 1
