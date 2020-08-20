@@ -12,11 +12,6 @@ train2<- Observations2(50)
 
 #cart by rpart
 
-
-
-printcp(mytree)
-plotcp(mytree)
-
 mytree <- rpart(
   symptoms ~. , 
   data = train, 
