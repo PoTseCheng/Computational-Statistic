@@ -17,7 +17,6 @@ Please use the following badges to view my notebook:
 
 ## To do list
 
-- start the DGP process (check if it make sense or not!)
 
 - algorithm description
 
