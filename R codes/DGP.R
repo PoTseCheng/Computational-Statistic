@@ -1,5 +1,3 @@
-install.packages("wakefield")
-
 #Packages for DGP
 #for age generation
 library(wakefield)
