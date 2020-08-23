@@ -46,10 +46,6 @@ temp<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(39/46, 5/46, 2/46))
 address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
 
 #temperature
-#temp2<- sample(c(0, 1, 2, 3), size=n1, replace=TRUE, prob = c(9/46, 16/46, 20/46, 1/46))
-#tlabel<- factor(temp2, levels = c(0, 1, 2, 3), labels = c("average", "high", "dangerous", "critical"))
-
-
 
 n31<- runif(round(n1*(9/46)), 36.5, 37.2)
 n32<- runif(round(n1*(16/46)), 37.3, 38.0)
@@ -176,10 +172,6 @@ address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other")
 
 #temperature
 
-#temp2<- sample(c(0, 1, 2, 3), size=n2, replace=TRUE, prob = c(38/216, 94/216, 76/216, 8/216))
-
-#tlabel<- factor(temp2, levels = c(0, 1, 2, 3), labels = c("average", "high", "dangerous", "critical"))
-
 
 n41<- runif(round(n2*(38/216)), 36.5, 37.2)
 n42<- runif(round(n2*(94/216)), 37.3, 38.0) 
@@ -292,7 +284,7 @@ Observations2<- function (n){
   #key idea about this process: We will be using the descriptive statistics to
   #to generate the result
   
-  #below are for the dummy variables, which is randomly sampled, we will follow the
+  #below are for the dummy variables, which is generated according to the paper, we will follow the
   #suggested mean but not the SD. The reason is because the SD is realated to the sample
   #size while the mean is not. In this experiment, the sample size is a controlable variable.
   D_F<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.457, 0.543))
@@ -499,7 +491,7 @@ Observations2<- function (n){
   
   
   
-  #build the dataframe
+  #build the dataframe with final result
   final <-data.frame(Gender, Race, Generation, Status, Geographic, Remedy, Choice, Living, Community, Athlete, Aidtype, Aidamount, Unmet, ACT, AP, Course, Ccount, Dcount, result)
   
   return(final)

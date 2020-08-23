@@ -43,8 +43,7 @@ mytree3 <- rpart(
   result ~ ., 
   data = train2, 
   method = "class",
-  minsplit = 1, 
-  minbucket = 1
+  
  )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
@@ -89,9 +88,7 @@ J3 <- J48(Aidtype ~.,
           train2
           )
 plot(J3)
-#one of the major difference, c4.5 did not choose .blah blah blah
-
-#ct tree by partykit(dont know if we keep it or not)
+#one of the major difference, c4.5 did not choose.
 
 
 
@@ -107,6 +104,12 @@ c2<- ctree(result ~ .,
 
 plot(c2)
 
+c3<- ctree(Aidtype ~ .,
+           train2
+           )
+
+plot(c3)
+
 c4<- ctree(result ~ .,
            train2
 )
@@ -115,12 +118,6 @@ plot(c4)
 
 
 
-c3 <- ctree(Aidtype ~.,
-          train2,
-          )
-plot(c3)
-
-summary(c3)
 
 
 
