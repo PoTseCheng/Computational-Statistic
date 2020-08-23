@@ -295,13 +295,13 @@ Observations2<- function (n){
   #below are for the dummy variables, which is randomly sampled, we will follow the
   #suggested mean but not the SD. The reason is because the SD is realated to the sample
   #size while the mean is not. In this experiment, the sample size is a controlable variable.
-  D_F<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.543, 0.543))
+  D_F<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.457, 0.543))
   Gender<- factor(D_F, levels = c(0,1), labels = c("Female", "Male"))
   D_R<- sample(c(0,1,2), size=n, replace=TRUE, prob = c(0.079, 0.11, 0.811))
   Race<- factor(D_R, levels = c(0, 1, 2), labels = c("Minorities", "Asian", "White"))
   D_G<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.636, 0.364))
   Generation<- factor(D_G, levels = c(0, 1), labels = c("No", "Yes"))
-  D_19<- sample(c(0,1), size=n, replace=TRUE, prob = c(1-0.019, 0.019))
+  D_19<- sample(c(0,1), size=n, replace=TRUE, prob = c(0.981, 0.019))
   Status<- factor(D_19, levels = c(0, 1), labels = c("Traditional", "Nontraditional"))
   
   

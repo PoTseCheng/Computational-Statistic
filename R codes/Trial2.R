@@ -185,21 +185,21 @@ rawdf<- cbind(raw1, raw2, raw3)
 rawdf<- data.matrix(rawdf)
 
 rawresult<- matrix(0, n, 3)
+result<- vector()
+
 
 for (i in 1:n){
-  
-  
-  
-  
+  rawresult[i,1] <-exp(test1[i,]%*%t(beta1))
+  rawresult[i,2] <-exp(test1[i,]%*%t(beta2))
+  rawresult[i,3] <- exp(test1[i,]%*%t(beta3))
+  if(rawresult[i,1]>rawresult[i,2]&rawresult[i,1]>rawresult[i,2]){
+    result<- c(result, "Transferred Graduated")
+  }else if (rawresult[i,2]>rawresult[i,1]&rawresult[i,2]>rawresult[i,3]){
+    result<- c(result, "Not Graduated")
+  }else if (rawresult[i,3]>rawresult[i,1]&rawresult[i,3]>rawresult[i,2]){
+    result<- c(result, "Graduated")
+  }
+
 }
 
 
-
-result<- vector()
-if(i){
-  result<- c(result, "Graduated")
-}else if (i){
-  result<- c(result, "Transferred Graduated")
-}else if(i){
-  result<- c(result, "Not Graduated")
-}
