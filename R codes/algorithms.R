@@ -3,12 +3,12 @@ library(data.table)
 library(rpart)
 library(RWeka)
 library(partykit)
-
+library(rpart.plot)
 
 set.seed(123)
-train<- Observations(50)
+train<- Observations(500)
 
-train2<- Observations2(50)
+train2<- Observations2(500)
 
 #cart by rpart
 
@@ -16,7 +16,7 @@ mytree <- rpart(
   symptoms ~. , 
   data = train, 
   method = "class",
-  control=rpart.control( minsplit=3, minbucket=1, cp=0.001)
+  control=rpart.control( minsplit=3)
   )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
@@ -84,7 +84,11 @@ J2 <- J48(result ~.,
           train2
           )
 plot(J2)
-summary(J2)
+
+J3 <- J48(Aidtype ~.,
+          train2
+          )
+plot(J3)
 #one of the major difference, c4.5 did not choose .blah blah blah
 
 #ct tree by partykit(dont know if we keep it or not)
@@ -97,12 +101,26 @@ c1<- ctree(symptoms ~ .,
 
 plot(c1)
 
-c2 <- ctree(result ~.,
-          train2,
-          )
+c2<- ctree(result ~ .,
+           train
+)
+
 plot(c2)
 
+c4<- ctree(result ~ .,
+           train2
+)
 
+plot(c4)
+
+
+
+c3 <- ctree(Aidtype ~.,
+          train2,
+          )
+plot(c3)
+
+summary(c3)
 
 
 

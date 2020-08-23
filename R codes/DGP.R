@@ -1,7 +1,11 @@
 #Packages for DGP
+#for producing a 
+
 #for age generation
 library(wakefield)
 library(truncnorm)
+
+
 
 #DGP 1
 Observations<- function (n){
@@ -327,54 +331,176 @@ Observations2<- function (n){
   a3<- sum(finraw == 3)
   
   #implement aid
-  Needaid<- round(rtruncnorm(a1, a=0, b=9.186, mean=0.948, sd=1.620), 2)
-  Loanaid<- round(rtruncnorm(a2, a=0, b=12.792, mean=1.543, sd=2.234), 2)
-  Meritaid<- round(rtruncnorm(a3, a=0, b=6.818, mean=0.168, sd=0.538), 2)
+  rawNeedaid<- rtruncnorm(a1, a=0, b=9.186, mean=0.948, sd=1.620)
   
-  Aidamount<- vector()
+  
+  rawLoanaid<- rtruncnorm(a2, a=0, b=12.792, mean=1.543, sd=2.234)
+  
+  
+  rawMeritaid<-rtruncnorm(a3, a=0, b=6.818, mean=0.168, sd=0.538) 
+  
+  
+  rawAidamount<- vector()
   
   j<-1
   x<-1
   z<-1
   for (i in finraw){
     if (i==1){
-      Aidamount<- c(Aidamount, Needaid[j])
+      rawAidamount<- c(rawAidamount, rawNeedaid[j])
       j<- j+1
     }else if (i==2){
-      Aidamount<- c(Aidamount,Loanaid[x])
+      rawAidamount<- c(rawAidamount, rawLoanaid[x])
       x<-x+1
     }else if (i==3){
-      Aidamount<- c(Aidamount,Meritaid[z])
+      rawAidamount<- c(rawAidamount, rawMeritaid[z])
       z<- z+1
     }else if (i==0){
-      Aidamount<- c(Aidamount, 0)
+      rawAidamount<- c(rawAidamount, 0)
     }
     
     
   }
-
+  
+  
+  Aidamount<- vector()
+  for (i in rawAidamount){
+    Aidamount<- c(Aidamount, round(i, 2))
+    
+  }
   
   #we will be using the truncnorm library to construct the variables
   
 
-  Unmet<- round(rtruncnorm(n, a=0, b=26.347, mean=2.038, sd=3.711), 2)
+  rawUnmet<- rtruncnorm(n, a=0, b=26.347, mean=2.038, sd=3.711)
+  Unmet<- round(rawUnmet, 2)
   
-  ACT<- round(rtruncnorm(n, a=11, b=35, mean=24.657, sd=4.189), 2)
-  AP<- round(rtruncnorm(n, a=0, b=59, mean=3.153, sd=6.671), 2)
-  Course<- round(rtruncnorm(n, a=0, b=100, mean=91.857, sd=20.288), 2)
-  Ccount<- round(rtruncnorm(n, a=0, b=5, mean=0.691, sd=0.898), 2)
-  Dcount<- round(rtruncnorm(n, a=0, b=4, mean=0.13, sd=0.387), 2)
-  
+  rawACT<- rtruncnorm(n, a=11, b=35, mean=24.657, sd=4.189)
+  ACT<- round(rawACT, 2)
+  rawAP<- rtruncnorm(n, a=0, b=59, mean=3.153, sd=6.671)
+  AP<- round(rawAP, 2)
+  rawCourse<- rtruncnorm(n, a=0, b=100, mean=91.857, sd=20.288)
+  Course<- round(rawCourse, 2)
+  rawCcount<- rtruncnorm(n, a=0, b=5, mean=0.691, sd=0.898)
+  Ccount<- round(rawCcount, 2)
+  rawDcount<- rtruncnorm(n, a=0, b=4, mean=0.13, sd=0.387)
+  Dcount<- round(rawDcount, 2)
   
   #we will also generate the result here according to the paper
   
-  temp<- sample(c(0, 1, 2), size=n, replace=TRUE, prob = c(0.659, 0.0854, 0.2556))
+  #need to make some changes here
   
-  result <-factor(temp, levels = c(0,1,2), labels = c("Graduated", "Transferred Graduated ", "Not Graduated"))
+  #preparation for the end result of the paper
+  beta1<- matrix(c(log(1.0163), log(1.0387), log(1.0751), log(0.5763), log(0.8239), log(1.4669), log(1.0736), log(1.4007), log(3.4570), log(1.0732),log(0.9210), log(1.0252), log(0.9612), log(2.9302), log(0.9598), log(1.4969), log(1.9247), log(0.8705), log(0.7729),log(0.7322), log(0.5342)),ncol=21)
+  beta2<- matrix(c(log(1.0331), log(0.9644), log(1.0658), log(0.6495), log(1.4504), log(0.9286), log(0.6117), log(1.0510), log(1.161), log(1.9606), log(1.8764), log(0.9781), log(0.976), log(1.0572), log(0.979), log(1.1397), log(1.5924), log(0.878), log(0.843), log(0.7328), log(0.618)), ncol=21)
+  beta3<- matrix(c(log(0.9838), log(1.077), log(1.0087), log(0.8873), log(0.568), log(1.5797), log(1.7551), log(1.3327), log(2.9753), log(0.5474), log(0.4909), log(1.0482), log(0.9848), log(2.7718), log(0.9803), log(1.3134), log(1.2086), log(0.9915), log(0.9169), log(0.9991), log(0.8646)), ncol= 21)
+  
+  z<- 1
+  a<- 1
+  b<- 1
+  c<- 1
+  
+  #we need to build this part using the already known finraw, by constructing a matrix with n rows 3 columns, with only one column has a value besides 0
+  Calaid<- matrix(0, n, 3)
+  for (i in finraw){
+    if (i==1){
+      Calaid[z, 2]<-  0
+      Calaid[z, 3]<-  0
+      Calaid[z,1]<- Calaid[z,1] + rawNeedaid[a]
+      a<- a+1
+      z<- z+1
+    }else if (i==2){
+      Calaid[z, 1]<-  0
+      Calaid[z, 3]<-  0
+      Calaid[z,2]<- Calaid[z,2] + rawLoanaid[b]
+      b<- b+1
+      z<- z+1
+    }else if (i==3){
+      Calaid[z, 1]<-  0
+      Calaid[z, 2]<-  0
+      Calaid[z,3]<- Calaid[z,3] + rawMeritaid[c]
+      c<- c+1
+      z<- z+1
+    }else if (i==0){
+      Calaid[z, 1]<-  0
+      Calaid[z, 2]<-  0
+      Calaid[z, 3]<-  0
+      z<- z+1
+      
+    }
+    
+  }
+  
+  
+  #the below two for loops are transfering the already established D_R and G_o (as they got more then 1 values) to dummy variables
+  
+  D_U<- vector()
+  D_A<- vector()
+  for (i in D_R){
+    if (i==0){
+      D_U<- c(D_U, 1)
+      D_A<- c(D_A, 0)
+      
+    }else if (i==1){
+      D_U<- c(D_U, 0)
+      D_A<- c(D_A, 1)
+    }else if (i==2){
+      D_U<- c(D_U, 0)
+      D_A<- c(D_A, 0)
+    }
+    
+  }
+  
+  G_S<- vector()
+  G_R<- vector()
+  for (i in G_O){
+    if (i==0){
+      G_S<- c(G_S, 1)
+      G_R<- c(G_R, 0)
+      
+    }else if (i==1){
+      G_S<- c(G_S, 0)
+      G_R<- c(G_R, 0)
+    }else if (i==2){
+      G_S<- c(G_S, 0)
+      G_R<- c(G_R, 0)
+    }
+  }
+  
+  #preparation df for calculating the result
+  
+  raw1<- data.frame(rawUnmet)
+  raw2<- as.data.frame(Calaid)
+  raw3<- data.frame(D_F, D_U, D_A, D_G, D_19, G_S, G_R, rawACT, rawAP, A_R, rawCourse, rawCcount, rawDcount, A_F, A_LC, A_LL, A_A)
+  
+  rawdf<- cbind(raw1, raw2, raw3)
+  
+  rawdf<- data.matrix(rawdf)
+  
+  rawresult<- matrix(0, n, 3)
+  result<- vector()
+  
+  #we use the papers result to calculate the odds of getting either Transferred, Not graduated, or Graduated
+  for (i in 1:n){
+    rawresult[i,1] <- exp(rawdf[i,]%*%t(beta1))
+    rawresult[i,2] <- exp(rawdf[i,]%*%t(beta2))
+    rawresult[i,3] <- exp(rawdf[i,]%*%t(beta3))
+    
+    if(rawresult[i,1]>rawresult[i,2]&rawresult[i,1]>rawresult[i,2]){
+      result<- c(result, "Transferred Graduated")
+    }else if (rawresult[i,2]>rawresult[i,1]&rawresult[i,2]>rawresult[i,3]){
+      result<- c(result, "Not Graduated")
+    }else if (rawresult[i,3]>rawresult[i,1]&rawresult[i,3]>rawresult[i,2]){
+      result<- c(result, "Graduated")
+    }
+    
+  }
+  
+  
   
   
   #build the dataframe
-  raw <-data.frame(Gender, Race, Generation, Status, Geographic, Remedy, Choice, Living, Community, Athlete, Aidtype, Aidamount, Unmet, ACT, AP, Course, Ccount, Dcount, result)
+  final <-data.frame(Gender, Race, Generation, Status, Geographic, Remedy, Choice, Living, Community, Athlete, Aidtype, Aidamount, Unmet, ACT, AP, Course, Ccount, Dcount, result)
   
-  return(raw)
+  return(final)
 }
