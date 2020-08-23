@@ -1,4 +1,4 @@
-#Packages for DGP
+#PackAges for DGP
 #for producing a 
 
 #for age generation
@@ -17,9 +17,9 @@ p2<- 216/262
 n2<- round(n*p2)
 
 #group A (severe)#
-severity<- rep(1, n1)
+Severity<- rep(1, n1)
 
-#age generation
+#Age generation
 
 n11<- age(round(n1*(1/46)), x= 1:12)
 n12<- age(round(n1*(9/46)), x= 13:44)
@@ -36,16 +36,16 @@ if (test< n1){
   n13 <- n13[-sample(1:length(n13), 1)]
   
 } 
-age<- c(n11, n12, n13, n14)
+Age<- c(n11, n12, n13, n14)
 
-#gender
+#Gender
 temp0<- sample(c(1, 0), size=n1, replace=TRUE, prob = c(26/46, 20/46))
-gender<- factor(temp0, levels = c(1,0), labels = c("Male", "Female"))
-#living address
+Gender<- factor(temp0, levels = c(1,0), labels = c("Male", "Female"))
+#living Address
 temp<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(39/46, 5/46, 2/46))
-address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
+Address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
 
-#temperature
+#Temperature
 
 n31<- runif(round(n1*(9/46)), 36.5, 37.2)
 n32<- runif(round(n1*(16/46)), 37.3, 38.0)
@@ -65,86 +65,86 @@ if (test3< n1){
 } 
 
 
-rawtemperature<- c(n31, n32, n33, n34)
-temperature<- vector()
-for (i in rawtemperature){
-  temperature<- c(temperature, round(i, 2))
+rawTemperature<- c(n31, n32, n33, n34)
+Temperature<- vector()
+for (i in rawTemperature){
+  Temperature<- c(Temperature, round(i, 2))
   
   
 }
 
-tlabel<- vector()
-for (i in temperature){
+Tlabel<- vector()
+for (i in Temperature){
   if (i <= 37.5){
-    tlabel<- c(tlabel, "Normal")
+    Tlabel<- c(Tlabel, "Normal")
   } else if (i>37.5& i <=40){
-    tlabel<- c(tlabel, "Fever")
+    Tlabel<- c(Tlabel, "Fever")
   } else if (i>40){
-    tlabel<- c(tlabel, "Hyperpyrexia")
+    Tlabel<- c(Tlabel, "Hyperpyrexia")
   }
   
   
 }
 #Wuhan Contacts
 temp3<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(13/46, 26/46, 7/46))
-contact<- factor(temp3, levels = c(0, 1, 2), labels = c("Wuhan 14 days", "Case 14 days", "Unknown"))
-#symptoms
+Contact<- factor(temp3, levels = c(0, 1, 2), labels = c("Wuhan 14 days", "Case 14 days", "Unknown"))
+#Symptoms
 cough<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(25/46, 21/46))
 fatigue<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(15/46, 31/46))
 Dyspnea<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(15/46, 31/46))
 Headache<- sample(c(1, 0), size=n1, replace=TRUE, prob= c(3/46, 43/46))
 all<- data.frame(cough, fatigue, Dyspnea, Headache)
-symptoms<- vector()
+Symptoms<- vector()
 
 for (i in 1:nrow(all))
 {
   if (all[i,1]==1&all[i,2]==1&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Fatigue, Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue, Dyspnea, Headache")
   }else if (all[i,1]==1&all[i,2]==1&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing, Fatigue, Dyspnea")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue, Dyspnea")
   }else if (all[i,1]==1&all[i,2]==1&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing, Fatigue")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing")
+    Symptoms<-c(Symptoms, "Coughing")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Fatigue, Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Fatigue, Dyspnea, Headache")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Fatigue, Dyspnea")
+    Symptoms<-c(Symptoms, "Fatigue, Dyspnea")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Fatigue, Headache")
+    Symptoms<-c(Symptoms, "Fatigue, Headache")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "Fatigue")
+    Symptoms<-c(Symptoms, "Fatigue")
   }else if (all[i,1]==1&all[i,2]==1&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Fatigue, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue, Headache")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing, Dyspnea")
+    Symptoms<-c(Symptoms, "Coughing, Dyspnea")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Dyspnea, Headache")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Headache")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Dyspnea, Headache")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Dyspnea")
+    Symptoms<-c(Symptoms, "Dyspnea")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Headache")
+    Symptoms<-c(Symptoms, "Headache")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "No Symptoms")
+    Symptoms<-c(Symptoms, "No Symptoms")
   }
   
 }
-#result
+#Result
 temp4<- sample(c(0, 1, 2), size=n1, replace=TRUE, prob = c(2/46, 41/46, 3/46))
-result<- factor(temp4, levels = c(0, 1, 2), labels = c("Discharge", "Hospitalization", "Death"))
+Result<- factor(temp4, levels = c(0, 1, 2), labels = c("Discharge", "Hospitalization", "Death"))
 
-groupa<- data.frame(severity, gender, age, address, contact, temperature, tlabel, symptoms, result)
+groupa<- data.frame(Severity, Gender, Age, Address, Contact, Temperature, Tlabel, Symptoms, Result)
 
 #group B
 
-severity<- rep(0, n2)
+Severity<- rep(0, n2)
 
 
-#age generation
+#Age generation
 
 n21<- age(round(n2*(10/216)), x= 1:12)
 n22<- age(round(n2*(103/216)), x= 13:44)
@@ -161,16 +161,16 @@ if (test< n2){
   n23 <- n23[-sample(1:length(n23), 1)]
   
 } 
-age<- c(n21, n22, n23, n24)
+Age<- c(n21, n22, n23, n24)
 
-#gender
+#Gender
 temp0<- sample(c(1,0), size=n2, replace=TRUE, prob = c(101/216, 115/216))
-gender<-factor(temp0, levels = c(1,0), labels = c("Male", "Female"))
-#living address
+Gender<-factor(temp0, levels = c(1,0), labels = c("Male", "Female"))
+#living Address
 temp<- sample(c(0, 1, 2), size=n2, replace=TRUE, prob = c(153/216, 48/216, 15/216))
-address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
+Address<- factor(temp, levels = c(0,1,2), labels = c("Beijin", "Wuhan", "Other"))
 
-#temperature
+#Temperature
 
 
 n41<- runif(round(n2*(38/216)), 36.5, 37.2)
@@ -189,24 +189,24 @@ if (test4< n2){
   n42 <- n42[-sample(1:length(n42), 1)]
   
 } 
-temperature<- c(n41, n42, n43, n44)
+Temperature<- c(n41, n42, n43, n44)
 
-rawtemperature<- c(n41, n42, n43, n44)
-temperature<- vector()
-for (i in rawtemperature){
-  temperature<- c(temperature, round(i, 2))
+rawTemperature<- c(n41, n42, n43, n44)
+Temperature<- vector()
+for (i in rawTemperature){
+  Temperature<- c(Temperature, round(i, 2))
   
   
 }
 
-tlabel<- vector()
-for (i in temperature){
+Tlabel<- vector()
+for (i in Temperature){
   if (i <= 37.5){
-    tlabel<- c(tlabel, "Normal")
+    Tlabel<- c(Tlabel, "Normal")
   } else if (i>37.5& i <=40){
-    tlabel<- c(tlabel, "Fever")
+    Tlabel<- c(Tlabel, "Fever")
   } else if (i>40){
-    tlabel<- c(tlabel, "Hyperpyrexia")
+    Tlabel<- c(Tlabel, "Hyperpyrexia")
   }
   
   
@@ -214,8 +214,8 @@ for (i in temperature){
 
 #Wuhan Contacts
 temp3<- sample(c(0, 1, 2), size=n2, replace=TRUE, prob = c(93/216, 103/216, 20/216))
-contact<- factor(temp3, levels = c(0, 1, 2), labels = c("Wuhan 14 days", "Case 14 days", "Unknown"))
-#symptoms
+Contact<- factor(temp3, levels = c(0, 1, 2), labels = c("Wuhan 14 days", "Case 14 days", "Unknown"))
+#Symptoms
 
 cough<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(95/216, 121/216))
 fatigue<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(54/216, 162/216))
@@ -223,51 +223,51 @@ Dyspnea<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(3/216, 213/216))
 Headache<- sample(c(1, 0), size=n2, replace=TRUE, prob= c(14/216, 202/216))
 all<- data.frame(cough, fatigue, Dyspnea, Headache)
 
-symptoms<- vector()
+Symptoms<- vector()
 
 for (i in 1:nrow(all))
 {
   if (all[i,1]==1&all[i,2]==1&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Fatigue, Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue, Dyspnea, Headache")
   }else if (all[i,1]==1&all[i,2]==1&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing, Fatigue, Dyspnea")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue, Dyspnea")
   }else if (all[i,1]==1&all[i,2]==1&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing, Fatigue")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing")
+    Symptoms<-c(Symptoms, "Coughing")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Fatigue, Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Fatigue, Dyspnea, Headache")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Fatigue, Dyspnea")
+    Symptoms<-c(Symptoms, "Fatigue, Dyspnea")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Fatigue, Headache")
+    Symptoms<-c(Symptoms, "Fatigue, Headache")
   }else if (all[i,1]==0&all[i,2]==1&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "Fatigue")
+    Symptoms<-c(Symptoms, "Fatigue")
   }else if (all[i,1]==1&all[i,2]==1&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Fatigue, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Fatigue, Headache")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Coughing, Dyspnea")
+    Symptoms<-c(Symptoms, "Coughing, Dyspnea")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Dyspnea, Headache")
   }else if (all[i,1]==1&all[i,2]==0&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Coughing, Headache")
+    Symptoms<-c(Symptoms, "Coughing, Headache")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==1&all[i,4]==1){
-    symptoms<-c(symptoms, "Dyspnea, Headache")
+    Symptoms<-c(Symptoms, "Dyspnea, Headache")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==1&all[i,4]==0){
-    symptoms<-c(symptoms, "Dyspnea")
+    Symptoms<-c(Symptoms, "Dyspnea")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==0&all[i,4]==1){
-    symptoms<-c(symptoms, "Headache")
+    Symptoms<-c(Symptoms, "Headache")
   }else if (all[i,1]==0&all[i,2]==0&all[i,3]==0&all[i,4]==0){
-    symptoms<-c(symptoms, "No Symptoms")
+    Symptoms<-c(Symptoms, "No Other Symptoms")
   }
   
 }
 
-#result
+#Result
 temp4<- sample(c(0, 1, 2), size=n2, replace=TRUE, prob = c(2/216, 41/216, 3/216))
-result<- factor(temp4, levels = c(0, 1, 2), labels = c("Discharge", "Hospitalization", "Death"))
+Result<- factor(temp4, levels = c(0, 1, 2), labels = c("Discharge", "Hospitalization", "Death"))
 
-groupb<- data.frame(severity, gender, age, address, contact, temperature, tlabel, symptoms, result)
+groupb<- data.frame(Severity, Gender, Age, Address, Contact, Temperature, Tlabel, Symptoms, Result)
 
 
 total <- rbind(groupa, groupb)
@@ -282,7 +282,7 @@ Observations2<- function (n){
   
   
   #key idea about this process: We will be using the descriptive statistics to
-  #to generate the result
+  #to generate the Result
   
   #below are for the dummy variables, which is generated according to the paper, we will follow the
   #suggested mean but not the SD. The reason is because the SD is realated to the sample
@@ -378,11 +378,11 @@ Observations2<- function (n){
   rawDcount<- rtruncnorm(n, a=0, b=4, mean=0.13, sd=0.387)
   Dcount<- round(rawDcount, 2)
   
-  #we will also generate the result here according to the paper
+  #we will also generate the Result here according to the paper
   
   #need to make some changes here
   
-  #preparation for the end result of the paper
+  #preparation for the end Result of the paper
   beta1<- matrix(c(log(1.0163), log(1.0387), log(1.0751), log(0.5763), log(0.8239), log(1.4669), log(1.0736), log(1.4007), log(3.4570), log(1.0732),log(0.9210), log(1.0252), log(0.9612), log(2.9302), log(0.9598), log(1.4969), log(1.9247), log(0.8705), log(0.7729),log(0.7322), log(0.5342)),ncol=21)
   beta2<- matrix(c(log(1.0331), log(0.9644), log(1.0658), log(0.6495), log(1.4504), log(0.9286), log(0.6117), log(1.0510), log(1.161), log(1.9606), log(1.8764), log(0.9781), log(0.976), log(1.0572), log(0.979), log(1.1397), log(1.5924), log(0.878), log(0.843), log(0.7328), log(0.618)), ncol=21)
   beta3<- matrix(c(log(0.9838), log(1.077), log(1.0087), log(0.8873), log(0.568), log(1.5797), log(1.7551), log(1.3327), log(2.9753), log(0.5474), log(0.4909), log(1.0482), log(0.9848), log(2.7718), log(0.9803), log(1.3134), log(1.2086), log(0.9915), log(0.9169), log(0.9991), log(0.8646)), ncol= 21)
@@ -424,7 +424,7 @@ Observations2<- function (n){
   }
   
   
-  #the below two for loops are transfering the already established D_R and G_o (as they got more then 1 values) to dummy variables
+  #the below two for loops are transfering the already established D_R and G_O (as they got more then 1 values) to dummy variables
   
   D_U<- vector()
   D_A<- vector()
@@ -459,31 +459,32 @@ Observations2<- function (n){
     }
   }
   
-  #preparation df for calculating the result
+  #preparation df for calculating the Result
   
   raw1<- data.frame(rawUnmet)
   raw2<- as.data.frame(Calaid)
   raw3<- data.frame(D_F, D_U, D_A, D_G, D_19, G_S, G_R, rawACT, rawAP, A_R, rawCourse, rawCcount, rawDcount, A_F, A_LC, A_LL, A_A)
   
+  #the rawdf matches exactly the order of the paper
   rawdf<- cbind(raw1, raw2, raw3)
   
   rawdf<- data.matrix(rawdf)
   
-  rawresult<- matrix(0, n, 3)
-  result<- vector()
+  rawResult<- matrix(0, n, 3)
+  Result<- vector()
   
-  #we use the papers result to calculate the odds of getting either Transferred, Not graduated, or Graduated
+  #we use the papers Result to calculate the odds of getting either Transferred, Not graduated, or Graduated
   for (i in 1:n){
-    rawresult[i,1] <- exp(rawdf[i,]%*%t(beta1))
-    rawresult[i,2] <- exp(rawdf[i,]%*%t(beta2))
-    rawresult[i,3] <- exp(rawdf[i,]%*%t(beta3))
+    rawResult[i,1] <- exp(rawdf[i,]%*%t(beta1))
+    rawResult[i,2] <- exp(rawdf[i,]%*%t(beta2))
+    rawResult[i,3] <- exp(rawdf[i,]%*%t(beta3))
     
-    if(rawresult[i,1]>rawresult[i,2]&rawresult[i,1]>rawresult[i,2]){
-      result<- c(result, "Transferred Graduated")
-    }else if (rawresult[i,2]>rawresult[i,1]&rawresult[i,2]>rawresult[i,3]){
-      result<- c(result, "Not Graduated")
-    }else if (rawresult[i,3]>rawresult[i,1]&rawresult[i,3]>rawresult[i,2]){
-      result<- c(result, "Graduated")
+    if(rawResult[i,1]>rawResult[i,2]&rawResult[i,1]>rawResult[i,2]){
+      Result<- c(Result, "Transferred Graduated")
+    }else if (rawResult[i,2]>rawResult[i,1]&rawResult[i,2]>rawResult[i,3]){
+      Result<- c(Result, "Not Graduated")
+    }else if (rawResult[i,3]>rawResult[i,1]&rawResult[i,3]>rawResult[i,2]){
+      Result<- c(Result, "Graduated")
     }
     
   }
@@ -491,8 +492,8 @@ Observations2<- function (n){
   
   
   
-  #build the dataframe with final result
-  final <-data.frame(Gender, Race, Generation, Status, Geographic, Remedy, Choice, Living, Community, Athlete, Aidtype, Aidamount, Unmet, ACT, AP, Course, Ccount, Dcount, result)
+  #build the dataframe with final Result
+  final <-data.frame(Gender, Race, Generation, Status, Geographic, Remedy, Choice, Living, Community, Athlete, Aidtype, Aidamount, Unmet, ACT, AP, Course, Ccount, Dcount, Result)
   
   return(final)
 }
