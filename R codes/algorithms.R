@@ -13,7 +13,7 @@ train2<- Observations2(500)
 #cart by rpart
 
 mytree <- rpart(
-  symptoms ~. , 
+  Symptoms ~. , 
   data = train, 
   method = "class",
   control=rpart.control( minsplit=3)
@@ -25,7 +25,7 @@ plot(mytree)
 text(mytree, use.n=TRUE, all=TRUE, cex=.8)
 
 mytree2 <- rpart(
-  result ~. , 
+  Result ~. , 
   data = train, 
   method = "class",
   control=rpart.control( minsplit=1, minbucket=1, cp=0.001)
@@ -40,7 +40,7 @@ printcp(mytree2)
 plotcp(mytree2)
 
 mytree3 <- rpart(
-  result ~ ., 
+  Result ~ ., 
   data = train2, 
   method = "class",
   
@@ -69,7 +69,7 @@ plotcp(mytree3)
 #c4.5
 
 
-J1 <- J48(symptoms ~ .,
+J1 <- J48(Symptoms ~ .,
           train
           )
 plot(J1)
@@ -79,7 +79,7 @@ summary(J1)
 #both rely on information gain formula (with a small twists) 
 #according to the J48 algorithm, the node is not worth splitting
 
-J2 <- J48(result ~.,
+J2 <- J48(Result ~.,
           train2
           )
 plot(J2)
@@ -98,7 +98,7 @@ c1<- ctree(symptoms ~ .,
 
 plot(c1)
 
-c2<- ctree(result ~ .,
+c2<- ctree(Result ~ .,
            train
 )
 
@@ -110,9 +110,9 @@ c3<- ctree(Aidtype ~ .,
 
 plot(c3)
 
-c4<- ctree(result ~ .,
+c4<- ctree(Result ~ .,
            train2
-)
+           )
 
 plot(c4)
 

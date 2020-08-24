@@ -470,26 +470,20 @@ Observations2<- function (n){
   
   rawdf<- data.matrix(rawdf)
   
-  rawResult<- matrix(0, n, 3)
-  Result<- vector()
+  rawResult<- matrix(0, n, 5)
+
   
   #we use the papers Result to calculate the odds of getting either Transferred, Not graduated, or Graduated
   for (i in 1:n){
-    rawResult[i,1] <- exp(rawdf[i,]%*%t(beta1))
-    rawResult[i,2] <- exp(rawdf[i,]%*%t(beta2))
-    rawResult[i,3] <- exp(rawdf[i,]%*%t(beta3))
-    
-    if(rawResult[i,1]>rawResult[i,2]&rawResult[i,1]>rawResult[i,2]){
-      Result<- c(Result, "Transferred Graduated")
-    }else if (rawResult[i,2]>rawResult[i,1]&rawResult[i,2]>rawResult[i,3]){
-      Result<- c(Result, "Not Graduated")
-    }else if (rawResult[i,3]>rawResult[i,1]&rawResult[i,3]>rawResult[i,2]){
-      Result<- c(Result, "Graduated")
-    }
+    rawResult[i,1] <- exp(rawdf[i,]%*%t(beta1))**2
+    rawResult[i,2] <- exp(rawdf[i,]%*%t(beta1))*exp(rawdf[i,]%*%t(beta2))
+    rawResult[i,3] <- exp(rawdf[i,]%*%t(beta2))*exp(rawdf[i,]%*%t(beta3))
+    rawResult[i,4] <- 1/(rawResult[i,1]+ rawResult[i,2] + rawResult[i,3])
+    rawResult[i,5] <- sample(c(0,1,2), size=1, replace=TRUE, prob = c(rawResult[i,1]*rawResult[i,4], rawResult[i,2]*rawResult[i,4], rawResult[i,3]*rawResult[i,4]))
     
   }
   
-  
+  Result<- factor(rawResult[1:n,5], levels = c(0, 1, 2), labels = c("Not Graduated", "Transfer Graduated", "Graduated"))
   
   
   #build the dataframe with final Result
