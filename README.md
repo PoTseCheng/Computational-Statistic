@@ -31,4 +31,4 @@ Please use the following badges to view my notebook:
 - change readme
 ---
 This Notebook is maintained by Po-Tse Cheng (Viktor Cheng)  
-https://img.shields.io/badge/License-MIT-blue
+
