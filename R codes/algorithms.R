@@ -1,10 +1,10 @@
-
+library(rattle)
 library(data.table)
 library(rpart)
 library(RWeka)
 library(partykit)
 library(rpart.plot)
-
+library(RColorBrewer)
 set.seed(123)
 train<- Observations(500)
 
