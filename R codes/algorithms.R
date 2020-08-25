@@ -18,9 +18,7 @@ mytree <- rpart(
   method = "class",
   control=rpart.control( minsplit=3)
   )
-#check what is the most reasonable cp for rpart
-#, minbucket=1
-#severity + gender + age + address + contact + temperature + fever + cough + fatigue + Dyspnea + Headache
+
 plot(mytree)
 text(mytree, use.n=TRUE, all=TRUE, cex=.8)
 
@@ -28,7 +26,7 @@ mytree2 <- rpart(
   Result ~. , 
   data = train, 
   method = "class",
-  control=rpart.control( minsplit=1, minbucket=1, cp=0.001)
+  control=rpart.control( minsplit=1, minbucket=1)
 )
 #check what is the most reasonable cp for rpart
 #, minbucket=1
