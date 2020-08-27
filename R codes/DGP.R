@@ -491,3 +491,14 @@ Observations2<- function (n){
   
   return(final)
 }
+
+##additional small DGP for bias illustration
+test<- function(n){
+  y<- rnorm(n, 0, 1)
+  x1<- c(rnorm(n-1, 0, 1),1)
+  x2<- c(rnorm(n-2, 0, 1),1/2,1/2)
+  x3<- c(rnorm(n-3, 0, 1),1/3,1/3,1/3)
+  end<- data.frame(y, x1, x2, x3)
+  
+  return(end)
+}
