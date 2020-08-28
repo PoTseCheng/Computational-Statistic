@@ -18,10 +18,6 @@ Please use the following badges to view my notebook:
 ## To do list
 
 
-- algorithm description
-
-- benchmark
-
 - Conclusion
 
 - Logic checking
@@ -29,6 +25,8 @@ Please use the following badges to view my notebook:
 - set up nbviewer
 
 - change readme
+
+
 ---
 This Notebook is maintained by Po-Tse Cheng (Viktor Cheng)  
 
