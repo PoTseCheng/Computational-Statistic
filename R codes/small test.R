@@ -1,6 +1,5 @@
 library(rpart)
 library(rpart.plot)
-library(ggplot2)
 
 
 test<- function(n){
@@ -23,8 +22,8 @@ bias<- function(n, df){
   
   raw2<- vector()
   for (i in 1:n){
-    x<- df
-    raw<- rpart(y~.,data=x)
+    
+    raw<- rpart(y~.,data=df)
     a<- path.rpart(raw,2)
     b<-a[[1]][2]
     s1 = unlist(strsplit(b, split='>', fixed=TRUE))[1]
