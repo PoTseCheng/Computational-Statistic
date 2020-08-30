@@ -1,8 +1,6 @@
 ## Student Project by Po-Tse Cheng
 
-sth regarding the project here
-
-This project aim to establish the connection between the research issue and the identification method utilised by the author. It also provides assessment of the identification strategy used by the authors. The replication of the original results includes verification for identifying strategy, channels examination , treatment effect estimations as well as additional robustness checks. My personal contribution mainly focused on complements that complete the original analysis. In addition, I provide extended potential interpretation from Brodeur (2018) that reach consensus with other post-attack analysis papers.
+This project aims to develop a better understanding regarding algorithms of Classification Trees. In particular, theoretical backgrounds will be discussed and simulated data from two separate papers will be utilised to provide evaluation and evidence in support of certain properties. This notebook is written in the following way: Chapter 1 is the introduction. Chapter 2 will cover most of the theoretical sections (Including DGPs) and limitations. In Chapter 3, we will use the established DGPs to evaluate the algorithms. Chapter 4 is the conclusion.
 
 Please use the following badges to view my notebook:
 
@@ -12,19 +10,6 @@ Please use the following badges to view my notebook:
   src="https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.png"
       width="109" height="20">
 </a>
-
-
-
-## To do list
-
-
-- Conclusion
-
-- Logic checking
-
-- set up nbviewer
-
-- change readme
 
 
 ---
