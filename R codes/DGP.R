@@ -1,10 +1,5 @@
-#PackAges for DGP
-#for producing a 
-
-#for age generation
 library(wakefield)
 library(truncnorm)
-
 
 
 #DGP 1
@@ -278,8 +273,6 @@ return (total)
 #DGP from the paper2
 
 Observations2<- function (n){
-  #maybe can expand this function in the future for more testing(for instance adding 0 function to test certain algorithm)
-  
   
   #key idea about this process: We will be using the descriptive statistics to
   #to generate the Result
@@ -331,7 +324,7 @@ Observations2<- function (n){
   
   rawMeritaid<-rtruncnorm(a3, a=0, b=6.818, mean=0.168, sd=0.538) 
   
-  
+  #assign Aidamount sequentially
   rawAidamount<- vector()
   
   j<-1
@@ -362,7 +355,6 @@ Observations2<- function (n){
   }
   
   #we will be using the truncnorm library to construct the variables
-  
 
   rawUnmet<- rtruncnorm(n, a=0, b=26.347, mean=2.038, sd=3.711)
   Unmet<- round(rawUnmet, 2)
@@ -379,8 +371,6 @@ Observations2<- function (n){
   Dcount<- round(rawDcount, 2)
   
   #we will also generate the Result here according to the paper
-  
-  #need to make some changes here
   
   #preparation for the end Result of the paper
   beta1<- matrix(c(log(1.0163), log(1.0387), log(1.0751), log(0.5763), log(0.8239), log(1.4669), log(1.0736), log(1.4007), log(3.4570), log(1.0732),log(0.9210), log(1.0252), log(0.9612), log(2.9302), log(0.9598), log(1.4969), log(1.9247), log(0.8705), log(0.7729),log(0.7322), log(0.5342)),ncol=21)
@@ -492,7 +482,8 @@ Observations2<- function (n){
   return(final)
 }
 
-##additional small DGP for bias illustration
+##additional small DGP for bias illustration##
+
 test<- function(n){
   y<- rnorm(n, 0, 1)
   x1<- c(rnorm(n-1, 0, 1),1)
